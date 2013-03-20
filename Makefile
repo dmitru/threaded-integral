@@ -7,10 +7,10 @@ GTEST_DIR = ./gtest-1.6.0
 COV_DIR = ./coverage
 
 # Flags passed to the preprocessor.
-CPPFLAGS += -I$(GTEST_DIR)/include -I$(GTEST_DIR) -I/usr/include/c++/4.6/x86_64-linux-gnu -lpthread
+CPPFLAGS += -I$(GTEST_DIR)/include -I$(GTEST_DIR) -I/usr/include/c++/4.6/x86_64-linux-gnu -lpthread -O3
 
 # Flags passed to the C++ compiler.
-CXXFLAGS += -g -Wall -Wextra -pthread -fprofile-arcs -ftest-coverage -DDEBUG -lpthread
+CXXFLAGS += -g -Wall -Wextra -pthread -fprofile-arcs -ftest-coverage -DDEBUG -lpthread -O3
 
 TEST_BIN = ./integral_test
 DRIVER_BIN = ./integral_driver
