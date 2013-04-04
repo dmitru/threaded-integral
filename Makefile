@@ -7,24 +7,26 @@ GTEST_DIR = ./gtest-1.6.0
 COV_DIR = ./coverage
 
 # Flags passed to the preprocessor.
-CPPFLAGS += -I$(GTEST_DIR)/include -I$(GTEST_DIR) -I/usr/include/c++/4.6/x86_64-linux-gnu -lpthread -O3
+CPPFLAGS += -I$(GTEST_DIR)/include -I$(GTEST_DIR) -I/usr/include/c++/4.6/x86_64-linux-gnu 
 
 # Flags passed to the C++ compiler.
 CXXFLAGS += -g -Wall -Wextra -pthread -fprofile-arcs -ftest-coverage -DDEBUG -lpthread -O3
+CXXFLAGS_RELEASE = -O3 -lpthread
 
 TEST_BIN = ./integral_test
 DRIVER_BIN = ./integral_driver
 
-all: tests driver
-	$(TEST_BIN)
+all: driver
+	
 
-driver: integral.o integral_driver.o
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -o $(DRIVER_BIN) $^
+driver:
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS_RELEASE) integral_driver.c integral.c -o $(DRIVER_BIN)
 
 # make tests - build and run all tests
-tests: integral_tests.o integral.o $(GTEST_DIR)/gtest_main.a
+tests: integral_tests.o integral.o $(GTEST_DIR)/gtest_main.a integral.o integral_driver.o
 	@echo "Building tests...s"
-	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -o $(TEST_BIN) $^ 
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -o $(TEST_BIN) integral_tests.o integral.o $(GTEST_DIR)/gtest_main.a
+	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -o $(DRIVER_BIN) integral_driver.o integral.o
 
 # make memcheck - perfrom valgrind leakage checking
 memcheck: tests
@@ -49,7 +51,7 @@ help:
 	@grep "^# make" ./Makefile 
 
 %.o: %.c
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $^ -o $@
+	$(CXX) $(CPPFLAGS) -c $^ -o $@
 
 clean:
 	rm -rf *.o coverage_results $(TEST_BIN) $(DRIVER_BIN)
