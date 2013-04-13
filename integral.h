@@ -5,4 +5,4 @@
 int integrate(double (*f)(double), double a, double b, 
   int n_threads, int n_points, double *res);
 
-#endif  // INTEGRAL_H 
+#endif  // INTEGRAL_H o

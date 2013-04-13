@@ -22,11 +22,12 @@ int main(int argc, char **argv)
   int n_points = atoi(argv[2]);
 
   double ans;
-  if (!integrate(f, 0.0, M_PI, n_threads, n_points, &ans)) {
+  int integrate_status = integrate(f, 0.0, M_PI, n_threads, n_points, &ans); 
+  if (integrate_status) {
     printf("%.10f\n", ans); 
   } else {
     fprintf(stderr, "Error: something went wrong when calling integrate()\n");
-    exit(2);
+    exit(integrate_status);
   }
 
   return 0;

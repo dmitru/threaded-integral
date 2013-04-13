@@ -20,7 +20,7 @@ all: driver
 	
 
 driver:
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS_RELEASE) integral_driver.c integral.c -o $(DRIVER_BIN)
+	$(CXX) $(CPPFLAGS) integral_driver.c integral.c -o $(DRIVER_BIN) $(CXXFLAGS_RELEASE)
 
 # make tests - build and run all tests
 tests: integral_tests.o integral.o $(GTEST_DIR)/gtest_main.a integral.o integral_driver.o
