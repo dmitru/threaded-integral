@@ -23,10 +23,11 @@ int main(int argc, char **argv)
 
   double ans;
   int integrate_status = integrate(f, 0.0, M_PI, n_threads, n_points, &ans); 
-  if (integrate_status) {
+  if (!integrate_status) {
     printf("%.10f\n", ans); 
   } else {
-    fprintf(stderr, "Error: something went wrong when calling integrate()\n");
+    fprintf(stderr, "Error: something went wrong when calling integrate()\n", 
+      integrate_status);
     exit(integrate_status);
   }
 
